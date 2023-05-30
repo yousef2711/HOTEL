@@ -2,26 +2,26 @@
 #include <string>
 using namespace std;
 
-class person {
+class hotel {
     string name;
     string IDroom;
-    person* left;
-    person* right;
+    hotel* left;
+    hotel* right;
 
 public:
-    person(string n, string id) {
-        
+    hotel(string n, string id) {
+
         name = n;
         IDroom = id;
         right = NULL;
         left = NULL;
     }
 
-    person* getRight() {
+    hotel* getRight() {
         return right;
     }
 
-    person* getLeft() {
+    hotel* getLeft() {
         return left;
     }
 
@@ -36,25 +36,25 @@ public:
         name = n;
     }
 
-    void setIDroom(const string& ID)  {
+    void setIDroom(const string& ID) {
         IDroom = ID;
     }
 
-    void setLeft(person* l) {
+    void setLeft(hotel* l) {
         left = l;
     }
 
-    void setRight(person* r) {
+    void setRight(hotel* r) {
         right = r;
     }
 };
 
 class binarysearchtree {
-    person* root;
+    hotel* root;
 
-    person* recInsert(person* current, string n, string p) {
+    hotel* recInsert(hotel* current, string n, string p) {
         if (!current) {
-            person* node = new person(n, p);
+            hotel* node = new hotel(n, p);
             current = node;
             return current;
         }
@@ -69,17 +69,17 @@ class binarysearchtree {
         return current;
     }
 
-    void recPrint(person* x) {
+    void recPrint(hotel* x) {
         if (!x) {
             return;
         }
 
         recPrint(x->getLeft());
-        cout << x->getName() << ":" << x->getIDroom() << endl;
+        cout <<"Name client is "<< x->getName() << "\n Room Number is " << x->getIDroom() << endl;
         recPrint(x->getRight());
     }
 
-    person* recSearch(person* current, string name) {
+    hotel* recSearch(hotel* current, string name) {
         if (!current) {
             return NULL;
         }
@@ -95,7 +95,7 @@ class binarysearchtree {
         }
     }
 
-    person* recRemove(person* current, string n) {
+    hotel* recRemove(hotel* current, string n) {
         if (!current) {
             return NULL;
         }
@@ -112,12 +112,12 @@ class binarysearchtree {
                 return NULL;
             }
             else if (!current->getLeft() || !current->getRight()) {
-                person* temp = current->getLeft() ? current->getLeft() : current->getRight();
+                hotel* temp = current->getLeft() ? current->getLeft() : current->getRight();
                 delete current;
                 return temp;
             }
             else {
-                person* temp = current->getRight();
+                hotel* temp = current->getRight();
                 while (temp->getLeft()) {
                     temp = temp->getLeft();
                 }
@@ -135,21 +135,21 @@ public:
         root = NULL;
     }
 
-    void addNode(string n, string p) {
+    void addNode(string n, string ID) {
         if (!root) {
-            person* x = new person(n, p);
+            hotel* x = new hotel(n, ID);
             root = x;
             return;
         }
 
-        recInsert(root, n, p);
+        recInsert(root, n, ID);
     }
 
-    person* search(string n) {
+    hotel* search(string n) {
         return recSearch(root, n);
     }
 
-    void removeContact(string n) {
+    void removeClient(string n) {
         root = recRemove(root, n);
     }
 
@@ -183,10 +183,10 @@ int main() {
         case 2:
             cout << "Enter name to search: ";
             cin >> name;
-            person* p;
-            p = t.search(name);
-            if (p) {
-                cout << "Client found: " << p->getName() << ": " << p->getIDroom() << endl;
+            hotel* h;
+            h = t.search(name);
+            if (h) {
+                cout << "Client found----> Name Client : " << h->getName() << "\n Room Number : " << h->getIDroom() << endl;
             }
             else {
                 cout << "Client not found." << endl;
@@ -195,10 +195,10 @@ int main() {
         case 3:
             cout << "Enter name to remove: ";
             cin >> name;
-            t.removeContact(name);
+            t.removeClient(name);
             break;
         case 4:
-            cout << "Clients:" << endl;
+            cout << "Clients Name" << endl;
             t.print();
             break;
         case 5:
